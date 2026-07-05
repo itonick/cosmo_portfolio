@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+JP:wght@300;400;500;700&amp;family=Shippori+Mincho:wght@600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#04060f;overflow-x:hidden}
+body{font-family:'Noto Sans JP',sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(122,150,245,0.35)}
+@keyframes blinkCue{0%,100%{opacity:0.85}50%{opacity:0.2}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes gradFlow{0%{background-position:0% 0}50%{background-position:100% 0}100%{background-position:0% 0}}
+@keyframes loadBar{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;background:#04060f;color:#e9edf7">
+
+  <div ref="{{ canvasRef }}" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none"></div>
+
+  <div ref="{{ loaderRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9;background:#04060f;display:flex;flex-direction:column;gap:20px;justify-content:center;align-items:center;transition:opacity 0.8s ease">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.34em;color:rgba(200,214,240,0.75);animation:blinkCue 1.6s infinite">CALIBRATING OBSERVATORY</div>
+    <div style="width:180px;height:2px;background:rgba(150,170,220,0.15);overflow:hidden"><div style="width:100%;height:100%;background:linear-gradient(90deg,#4a9de8,#9d8af5);transform-origin:left;animation:loadBar 1.4s cubic-bezier(0.22,1,0.36,1) forwards"></div></div>
+  </div>
+  <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 50%, rgba(4,6,15,0) 52%, rgba(4,6,15,0.6) 100%)"></div>
+
+  <div style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:20px 28px;pointer-events:none;background:linear-gradient(rgba(4,6,15,0.75), rgba(4,6,15,0))">
+    <span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:rgba(220,230,248,0.85)">T.HOSHINO — BACKEND ENGINEER</span>
+    <nav style="display:flex;gap:22px;pointer-events:auto">
+      <a href="#sec1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:rgba(200,214,240,0.6);text-decoration:none" style-hover="color:#ffffff">01 STORM</a>
+      <a href="#sec2" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:rgba(200,214,240,0.6);text-decoration:none" style-hover="color:#ffffff">02 RING</a>
+      <a href="#sec3" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:rgba(200,214,240,0.6);text-decoration:none" style-hover="color:#ffffff">03 NEBULA</a>
+      <a href="#sec4" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:rgba(200,214,240,0.6);text-decoration:none" style-hover="color:#ffffff">04 SPIRAL</a>
+      <a href="#sec5" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:rgba(200,214,240,0.6);text-decoration:none" style-hover="color:#ffffff">05 WEB</a>
+    </nav>
+  </div>
+
+  <div data-hud="deco" style="position:fixed;left:28px;bottom:24px;z-index:6;pointer-events:none;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;line-height:1.9">
+    <div ref="{{ secLabelRef }}" style="color:rgba(200,214,240,0.7)">OBS.01 — HEXAGONAL STORM</div>
+    <div ref="{{ coordRef }}" style="color:rgba(160,180,220,0.42)">SATURN — 78.1°N / Ø 29,000 KM</div>
+  </div>
+  <div data-hud="deco" style="position:fixed;right:28px;bottom:32px;z-index:6;pointer-events:none;width:150px;height:2px;background:rgba(150,170,220,0.14)">
+    <div ref="{{ progRef }}" style="width:0%;height:100%;background:linear-gradient(90deg,#4a9de8,#9d8af5)"></div>
+  </div>
+
+  <section id="sec1" data-screen-label="01 Hero — Hexagonal Storm" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 140px;box-sizing:border-box">
+    <div data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.26em;color:#6ab0f0;margin-bottom:24px;text-shadow:0 1px 12px rgba(4,6,15,0.9)">OBS.01 — HEXAGONAL STORM / SATURN NORTH POLE</div>
+    <h1 data-h="1" style="margin:0;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(54px,8.5vw,112px);line-height:0.98;letter-spacing:0.03em;color:#f0f4fc;background:linear-gradient(100deg,#f0f4fc 20%,#7db8f5 45%,#c9b3ff 60%,#f0f4fc 85%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:floatY 7s ease-in-out infinite,gradFlow 9s linear infinite">TAKUMI<br>HOSHINO</h1>
+    <div style="margin-top:28px;font-size:13px;letter-spacing:0.5em;color:rgba(222,231,248,0.85);text-shadow:0 1px 12px rgba(4,6,15,0.9)">星野 拓海 — バックエンドエンジニア</div>
+    <p style="margin:26px auto 0;max-width:480px;font-size:14px;line-height:2.1;color:rgba(212,222,244,0.75);text-shadow:0 1px 14px rgba(4,6,15,0.9)">大規模分散システムの設計と運用が専門。土星の北極で60年以上崩れない六角形の嵐のように、秩序を保ち続けるシステムをつくります。</p>
+    <div data-hud="deco" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(190,205,235,0.6);animation:blinkCue 2.6s infinite">SCROLL TO DESCEND ▼</div>
+  </section>
+
+  <section id="sec2" data-screen-label="02 About — Einstein Ring" style="position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;padding:120px 24px;box-sizing:border-box">
+    <div style="width:100%;max-width:1160px;margin:0 auto">
+      <div style="max-width:540px;background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:42px 44px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(140,185,245,0.55);box-shadow:0 14px 44px rgba(46,90,200,0.28)">
+        <div data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#6ab0f0">OBS.02 — EINSTEIN RING / GRAVITATIONAL LENSING</div>
+        <h2 data-h="1" style="margin:14px 0 10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(38px,5vw,64px);line-height:1.02;letter-spacing:0.02em;color:#eef2fa">ABOUT</h2>
+        <div style="font-size:12.5px;letter-spacing:0.28em;color:rgba(210,222,245,0.6);margin-bottom:22px">経歴 — 光は重力で曲がり、道は出会いで曲がる</div>
+        <p style="margin:0 0 26px;font-size:13.5px;line-height:2;color:rgba(214,224,244,0.78)">受託開発のJavaから、スタートアップのGo、そして決済基盤のテックリードへ。重い天体が光を曲げるように、出会ったチームと課題がキャリアの軌道を曲げてきました。</p>
+        <div style="display:flex;gap:20px;padding:16px 0;border-top:1px solid rgba(140,165,225,0.14)">
+          <span style="flex:none;width:56px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6ab0f0">2018</span>
+          <div><div style="font-weight:600;font-size:14px;color:#e9edf7">SIerで基幹システム開発</div><div style="font-size:12.5px;line-height:1.8;color:rgba(200,212,238,0.55);margin-top:4px">Java / Oracle — 金融系バッチ処理の設計・運用</div></div>
+        </div>
+        <div style="display:flex;gap:20px;padding:16px 0;border-top:1px solid rgba(140,165,225,0.14)">
+          <span style="flex:none;width:56px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6ab0f0">2020</span>
+          <div><div style="font-weight:600;font-size:14px;color:#e9edf7">スタートアップの1人目バックエンド</div><div style="font-size:12.5px;line-height:1.8;color:rgba(200,212,238,0.55);margin-top:4px">Go / AWS — ゼロからのマイクロサービス基盤構築</div></div>
+        </div>
+        <div style="display:flex;gap:20px;padding:16px 0;border-top:1px solid rgba(140,165,225,0.14)">
+          <span style="flex:none;width:56px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6ab0f0">2022</span>
+          <div><div style="font-weight:600;font-size:14px;color:#e9edf7">決済基盤のテックリード</div><div style="font-size:12.5px;line-height:1.8;color:rgba(200,212,238,0.55);margin-top:4px">ピーク12,000 TPSの決済システムを設計・運用</div></div>
+        </div>
+        <div style="display:flex;gap:20px;padding:16px 0;border-top:1px solid rgba(140,165,225,0.14)">
+          <span style="flex:none;width:56px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6ab0f0">2025</span>
+          <div><div style="font-weight:600;font-size:14px;color:#e9edf7">独立 — 技術顧問 / 設計支援</div><div style="font-size:12.5px;line-height:1.8;color:rgba(200,212,238,0.55);margin-top:4px">大規模データ基盤・分散システムの設計コンサルティング</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec3" data-screen-label="03 Skills — Square Nebula" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 24px;box-sizing:border-box">
+    <div style="text-align:center">
+      <div data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#9d8af5;text-shadow:0 1px 12px rgba(4,6,15,0.9)">OBS.03 — SQUARE NEBULA / MWC 922</div>
+      <h2 data-h="1" style="margin:14px 0 10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(38px,5vw,64px);line-height:1.02;letter-spacing:0.02em;color:#eef2fa;text-shadow:0 2px 24px rgba(4,6,15,0.95)">SKILLS</h2>
+      <div style="font-size:12.5px;letter-spacing:0.28em;color:rgba(210,222,245,0.6)">スキル — 星雲は、4つの象限に区切られる</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;width:100%;max-width:1000px;margin:44px auto 0;text-align:left">
+      <div style="background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:24px 26px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(140,185,245,0.55);box-shadow:0 14px 44px rgba(46,90,200,0.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#6ab0f0">LANGUAGES</span><span style="font-size:11px;color:rgba(200,212,238,0.45)">言語</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">Go</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">Python</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">TypeScript</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">Rust</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">SQL</span>
+        </div>
+      </div>
+      <div style="background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:24px 26px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(140,185,245,0.55);box-shadow:0 14px 44px rgba(46,90,200,0.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#6ab0f0">FRAMEWORKS / API</span><span style="font-size:11px;color:rgba(200,212,238,0.45)">通信・実装</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">gRPC</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">Gin</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">FastAPI</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">NestJS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(140,165,225,0.25);color:#cfe0fa;background:rgba(74,157,232,0.07)">GraphQL</span>
+        </div>
+      </div>
+      <div style="background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:24px 26px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(140,185,245,0.55);box-shadow:0 14px 44px rgba(46,90,200,0.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#9d8af5">DATA</span><span style="font-size:11px;color:rgba(200,212,238,0.45)">データ基盤</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">PostgreSQL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Redis</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Kafka</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Elasticsearch</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">BigQuery</span>
+        </div>
+      </div>
+      <div style="background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:24px 26px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(140,185,245,0.55);box-shadow:0 14px 44px rgba(46,90,200,0.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#9d8af5">INFRA / OPS</span><span style="font-size:11px;color:rgba(200,212,238,0.45)">インフラ・運用</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">AWS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">GCP</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Kubernetes</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Terraform</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">Docker</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 11px;border:1px solid rgba(157,138,245,0.28);color:#d8cffa;background:rgba(138,92,245,0.08)">GitHub Actions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec4" data-screen-label="04 Projects — Golden Spiral" style="position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;padding:120px 24px;box-sizing:border-box">
+    <div style="width:100%;max-width:1160px;margin:0 auto">
+      <div data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#e0b866;text-shadow:0 1px 12px rgba(4,6,15,0.9)">OBS.04 — GOLDEN SPIRAL / LOGARITHMIC GALAXY</div>
+      <h2 data-h="1" style="margin:14px 0 10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(38px,5vw,64px);line-height:1.02;letter-spacing:0.02em;color:#eef2fa;text-shadow:0 2px 24px rgba(4,6,15,0.95)">PROJECTS</h2>
+      <div style="font-size:12.5px;letter-spacing:0.28em;color:rgba(210,222,245,0.6);margin-bottom:40px">実績 — 渦巻銀河の腕のように、中心から外へ</div>
+      <div style="max-width:560px;background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:28px 32px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(224,184,102,0.5);box-shadow:0 14px 44px rgba(120,90,30,0.22)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#e0b866">φ¹</span>
+          <span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:rgba(170,190,225,0.55)">GO / KAFKA / POSTGRESQL / K8S</span>
+        </div>
+        <div style="font-size:19px;font-weight:600;color:#eef2fa;margin:12px 0 8px">リアルタイム決済基盤</div>
+        <p style="margin:0 0 20px;font-size:13px;line-height:1.95;color:rgba(210,220,242,0.7)">イベント駆動アーキテクチャによる決済処理基盤。Kafkaによる非同期パイプラインと冪等性設計で、ピーク時も取りこぼしゼロを実現。</p>
+        <div style="display:flex;gap:30px;flex-wrap:wrap">
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">12,000</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">PEAK TPS</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">45ms</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">P99 LATENCY</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">99.99%</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">SLA</div></div>
+        </div>
+      </div>
+      <div style="max-width:560px;margin:22px 0 0 6vw;background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:28px 32px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(224,184,102,0.5);box-shadow:0 14px 44px rgba(120,90,30,0.22)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#e0b866">φ²</span>
+          <span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:rgba(170,190,225,0.55)">PYTHON / ELASTICSEARCH</span>
+        </div>
+        <div style="font-size:19px;font-weight:600;color:#eef2fa;margin:12px 0 8px">検索基盤リプレイス</div>
+        <p style="margin:0 0 20px;font-size:13px;line-height:1.95;color:rgba(210,220,242,0.7)">2.4億ドキュメントの全文検索基盤を再設計。インデックス戦略とクエリ最適化でレイテンシとコストを同時に削減。</p>
+        <div style="display:flex;gap:30px;flex-wrap:wrap">
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">240M</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">DOCUMENTS</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">80→18ms</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">P50 QUERY</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">-62%</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">INFRA COST</div></div>
+        </div>
+      </div>
+      <div style="max-width:560px;margin:22px 0 0 12vw;background:rgba(5,8,18,0.62);border:1px solid rgba(140,165,225,0.16);padding:28px 32px;box-sizing:border-box;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s ease,box-shadow 0.5s ease" style-hover="transform:translateY(-6px);border-color:rgba(224,184,102,0.5);box-shadow:0 14px 44px rgba(120,90,30,0.22)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#e0b866">φ³</span>
+          <span data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:rgba(170,190,225,0.55)">GO / GRPC / TERRAFORM</span>
+        </div>
+        <div style="font-size:19px;font-weight:600;color:#eef2fa;margin:12px 0 8px">マルチテナントSaaS API基盤</div>
+        <p style="margin:0 0 20px;font-size:13px;line-height:1.95;color:rgba(210,220,242,0.7)">340テナントが同居するAPI基盤の分離設計とIaC化。デプロイを15分から90秒へ短縮し、開発速度を底上げ。</p>
+        <div style="display:flex;gap:30px;flex-wrap:wrap">
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">340</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">TENANTS</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">99.98%</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">UPTIME</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:#f0f4fc">90s</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(170,190,225,0.5);margin-top:3px">DEPLOY</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec5" data-screen-label="05 Contact — Cosmic Web" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;box-sizing:border-box">
+    <div data-mono="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#6ab0f0;text-shadow:0 1px 12px rgba(4,6,15,0.9)">OBS.05 — COSMIC WEB / LARGE-SCALE STRUCTURE</div>
+    <h2 data-h="1" style="margin:14px 0 10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(38px,5vw,64px);line-height:1.02;letter-spacing:0.02em;color:#eef2fa;text-shadow:0 2px 24px rgba(4,6,15,0.95)">CONTACT</h2>
+    <div style="font-size:12.5px;letter-spacing:0.28em;color:rgba(210,222,245,0.6)">連絡先 — すべての銀河は、見えない糸でつながっている</div>
+    <p style="margin:28px auto 36px;max-width:440px;font-size:13.5px;line-height:2.05;color:rgba(212,222,244,0.72);text-shadow:0 1px 12px rgba(4,6,15,0.9)">設計相談・技術顧問・登壇のご依頼など、お気軽にご連絡ください。</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+      <a href="mailto:hello@hoshino.dev" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.18em;color:#e9edf7;text-decoration:none;padding:15px 28px;border:1px solid rgba(140,165,225,0.32);background:rgba(74,157,232,0.08)" style-hover="background:rgba(74,157,232,0.22);border-color:rgba(140,185,245,0.6)">EMAIL</a>
+      <a href="https://github.com/" target="_blank" rel="noreferrer" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.18em;color:#e9edf7;text-decoration:none;padding:15px 28px;border:1px solid rgba(140,165,225,0.32);background:rgba(74,157,232,0.08)" style-hover="background:rgba(74,157,232,0.22);border-color:rgba(140,185,245,0.6)">GITHUB</a>
+      <a href="https://x.com/" target="_blank" rel="noreferrer" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.18em;color:#e9edf7;text-decoration:none;padding:15px 28px;border:1px solid rgba(140,165,225,0.32);background:rgba(74,157,232,0.08)" style-hover="background:rgba(74,157,232,0.22);border-color:rgba(140,185,245,0.6)">X / TWITTER</a>
+    </div>
+    <div data-mono="1" style="margin-top:110px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.22em;color:rgba(160,180,220,0.4)">© 2026 TAKUMI HOSHINO — RENDERED WITH THREE.JS</div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tone&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;observatory&quot;, &quot;poetic&quot;, &quot;minimal&quot;], &quot;default&quot;: &quot;observatory&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;トーン(3案の切替)&quot;}, &quot;speed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;min&quot;: 0.2, &quot;max&quot;: 2.5, &quot;step&quot;: 0.1, &quot;default&quot;: 1, &quot;section&quot;: &quot;3D演出&quot;}, &quot;parallax&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;min&quot;: 0, &quot;max&quot;: 2, &quot;step&quot;: 0.1, &quot;default&quot;: 1, &quot;section&quot;: &quot;3D演出&quot;}, &quot;density&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;min&quot;: 0.4, &quot;max&quot;: 1.6, &quot;step&quot;: 0.2, &quot;default&quot;: 1, &quot;section&quot;: &quot;3D演出&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  canvasRef = React.createRef();
+  secLabelRef = React.createRef();
+  coordRef = React.createRef();
+  progRef = React.createRef();
+  loaderRef = React.createRef();
+
+  _labels = ['OBS.01 — HEXAGONAL STORM', 'OBS.02 — EINSTEIN RING', 'OBS.03 — SQUARE NEBULA', 'OBS.04 — GOLDEN SPIRAL', 'OBS.05 — COSMIC WEB'];
+  _coords = ['SATURN — 78.1°N / Ø 29,000 KM', 'LRG 3-757 — COSMIC HORSESHOE', 'MWC 922 — RED SQUARE NEBULA', 'M51 — LOGARITHMIC SPIRAL / φ', 'LANIAKEA — 520 MLY'];
+
+  componentDidMount() {
+    this._alive = true;
+    this._seg = 0; this._segT = 0; this._p = 0; this._pT = 0;
+    this._mx = 0; this._my = 0; this._mxT = 0; this._myT = 0;
+    this._active = -1;
+    document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+    window.addEventListener('mousemove', this._onMouse);
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('click', this._onClick);
+    setTimeout(() => this._hideLoader(), 4000);
+    this._applyTone();
+    this._setupReveal();
+    this._waitThree();
+  }
+
+  componentWillUnmount() {
+    this._alive = false;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    document.removeEventListener('scroll', this._onScroll, { capture: true });
+    window.removeEventListener('mousemove', this._onMouse);
+    window.removeEventListener('resize', this._onResize);
+    if (this._revObs) this._revObs.disconnect();
+    window.removeEventListener('click', this._onClick);
+    if (this._scene) { for (const g of this._groups) { this._scene.remove(g); this._dispose(g); } }
+    if (this._renderer) { this._renderer.dispose(); const c = this._renderer.domElement; if (c && c.parentNode) c.parentNode.removeChild(c); }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tone !== this.props.tone) this._applyTone();
+    if (prevProps.density !== this.props.density && this._scene) this._rebuild();
+  }
+
+  _speed() { return this.props.speed ?? 1; }
+  _g() { return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5; }
+
+  _waitThree = () => {
+    if (!this._alive) return;
+    if (window.THREE) { this._init(); } else { setTimeout(this._waitThree, 100); }
+  };
+
+  _onScroll = () => {
+    const el = this.rootRef.current; if (!el) return;
+    if (this._revealAll) {
+      const vhh = window.innerHeight || 1;
+      for (const tEl of this._revTargets || []) {
+        if (tEl.style.opacity === '0') {
+          const tr = tEl.getBoundingClientRect();
+          if (tr.bottom > 0 && tr.top < vhh) { tEl.style.opacity = '1'; tEl.style.transform = 'translateY(0px)'; }
+        }
+      }
+    }
+    const r = el.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    const y = -r.top;
+    this._pT = Math.min(1, Math.max(0, y / Math.max(1, r.height - vh)));
+    const secs = [1, 2, 3, 4, 5].map(k => el.querySelector('#sec' + k));
+    if (secs.some(s => !s)) { this._segT = this._pT * 4; return; }
+    const a = secs.map(s => s.offsetTop + s.offsetHeight / 2 - vh / 2);
+    let seg;
+    if (y <= a[0]) seg = 0;
+    else if (y >= a[4]) seg = 4;
+    else {
+      let i = 0;
+      while (i < 3 && y >= a[i + 1]) i++;
+      seg = i + (y - a[i]) / Math.max(1, a[i + 1] - a[i]);
+    }
+    this._segT = seg;
+  };
+
+  _hideLoader() {
+    const l = this.loaderRef.current;
+    if (!l || l.style.opacity === '0') return;
+    l.style.opacity = '0';
+    l.style.pointerEvents = 'none';
+    setTimeout(() => { if (l) l.style.display = 'none'; }, 900);
+  }
+
+  _onClick = (e) => {
+    const colors = ['#7db8f5', '#b48af8', '#e0b866', '#f0f4fc'];
+    for (let i = 0; i < 12; i++) {
+      const p = document.createElement('div');
+      const size = 3 + Math.random() * 4;
+      const col = colors[i % 4];
+      p.style.cssText = 'position:fixed;left:' + e.clientX + 'px;top:' + e.clientY + 'px;width:' + size + 'px;height:' + size + 'px;margin:-' + (size / 2) + 'px;border-radius:50%;pointer-events:none;z-index:50;background:' + col + ';box-shadow:0 0 8px ' + col;
+      document.body.appendChild(p);
+      const ang = Math.random() * Math.PI * 2, dist = 30 + Math.random() * 70;
+      p.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+        { transform: 'translate(' + (Math.cos(ang) * dist) + 'px,' + (Math.sin(ang) * dist - 14) + 'px) scale(0)', opacity: 0 }
+      ], { duration: 600 + Math.random() * 500, easing: 'cubic-bezier(0.22,1,0.36,1)' }).onfinish = () => p.remove();
+    }
+  };
+
+  _onMouse = (e) => {
+    this._mxT = (e.clientX / window.innerWidth - 0.5) * 2;
+    this._myT = (e.clientY / window.innerHeight - 0.5) * 2;
+  };
+
+  _onResize = () => {
+    if (!this._renderer) return;
+    this._renderer.setSize(window.innerWidth, window.innerHeight);
+    this._camera.aspect = window.innerWidth / window.innerHeight;
+    this._camera.updateProjectionMatrix();
+  };
+
+  _applyTone() {
+    const tone = this.props.tone ?? 'observatory';
+    let css = '';
+    if (tone === 'poetic') {
+      css = '[data-h="1"]{font-family:\'Shippori Mincho\',serif !important;font-weight:600 !important;letter-spacing:0.08em !important}[data-mono="1"]{color:rgba(196,186,240,0.8) !important}';
+    } else if (tone === 'minimal') {
+      css = '[data-h="1"]{font-weight:400 !important;letter-spacing:0.12em !important}[data-hud="deco"]{display:none !important}[data-mono="1"]{opacity:0.55}';
+    }
+    let el = document.getElementById('om-tone-override');
+    if (!el) { el = document.createElement('style'); el.id = 'om-tone-override'; document.head.appendChild(el); }
+    el.textContent = css;
+  }
+
+  _setupReveal() {
+    const root = this.rootRef.current;
+    if (!root || this._revObs) return;
+    const targets = [];
+    for (const sec of root.querySelectorAll('section')) {
+      let i = 0;
+      for (const el of Array.from(sec.children)) {
+        if (el.hasAttribute('data-hud')) continue;
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        el.style.transition = 'opacity 0.9s cubic-bezier(0.22,1,0.36,1) ' + (i * 0.13) + 's, transform 0.9s cubic-bezier(0.22,1,0.36,1) ' + (i * 0.13) + 's';
+        if (r.bottom > 0 && r.top < vh) { i++; continue; }
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        targets.push(el);
+        i++;
+      }
+    }
+    this._revObs = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'translateY(0px)';
+          this._revObs.unobserve(en.target);
+        }
+      }
+    }, { threshold: 0.12 });
+    for (const el of targets) this._revObs.observe(el);
+    this._revTargets = targets;
+    this._revealAll = () => {
+      for (const el of targets) {
+        if (el.style.opacity === '0') { el.style.opacity = '1'; el.style.transform = 'translateY(0px)'; }
+      }
+    };
+    setTimeout(() => { if (this._alive && document.hidden !== false) this._revealAll(); }, 2500);
+  }
+
+  _buildComets(d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    const comets = [];
+    for (let i = 0; i < 3; i++) {
+      const s = this._sprite('rgba(255,255,255,1)', 'rgba(150,190,255,0.4)', 2, 0.9);
+      const c = { s, v: new THREE.Vector3(), life: 0, max: 1 };
+      this._resetComet(c, true);
+      group.add(s);
+      comets.push(c);
+    }
+    this._anims.push((t, dt) => {
+      for (const c of comets) {
+        c.life += dt;
+        c.s.position.x += c.v.x * dt;
+        c.s.position.y += c.v.y * dt;
+        const k = Math.sin(Math.PI * Math.min(1, c.life / c.max));
+        c.s.material.opacity = k * 0.85;
+        if (c.life >= c.max) this._resetComet(c, false);
+      }
+    });
+    return group;
+  }
+
+  _resetComet(c, first) {
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    c.s.position.set(-dir * (40 + Math.random() * 60), 14 + Math.random() * 26, 30 - Math.random() * 720);
+    c.v.set(dir * (16 + Math.random() * 18), -(7 + Math.random() * 9), 0);
+    c.max = 2.2 + Math.random() * 2.8;
+    c.life = first ? Math.random() * c.max : 0;
+    c.s.scale.set(5.5, 0.4, 1);
+    c.s.material.opacity = 0;
+  }
+
+  _init() {
+    const THREE = window.THREE;
+    const holder = this.canvasRef.current;
+    if (!holder || this._renderer) return;
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.style.display = 'block';
+    holder.appendChild(renderer.domElement);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x04060f);
+    scene.fog = new THREE.FogExp2(0x04060f, 0.0072);
+    const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 600);
+    camera.position.set(0, 3, 56);
+    this._THREE = THREE; this._renderer = renderer; this._scene = scene; this._camera = camera;
+    this._anims = []; this._groups = [];
+    this._buildAll();
+    this._last = performance.now();
+    this._onScroll();
+    this._tick();
+    setTimeout(() => this._hideLoader(), 900);
+  }
+
+  _buildAll() {
+    const d = Math.max(0.3, Math.min(2, this.props.density ?? 1));
+    const Z = [0, -170, -340, -510, -680];
+    const X = [0, -9, 0, 9, 0];
+    this._way = Z.map((z, i) => ({ x: X[i], y: i === 0 ? 3 : 0, z: z + 56 }));
+    this._look = Z.map((z, i) => ({ x: X[i], y: 0, z: z }));
+    const gs = [this._buildStorm(Z[0], d), this._buildRing(Z[1], d), this._buildNebula(Z[2], d), this._buildSpiral(Z[3], d), this._buildWeb(Z[4], d), this._buildStars(d), this._buildComets(d)];
+    for (const g of gs) { this._scene.add(g); this._groups.push(g); }
+  }
+
+  _rebuild() {
+    this._anims = [];
+    for (const g of this._groups) { this._scene.remove(g); this._dispose(g); }
+    this._groups = [];
+    this._buildAll();
+  }
+
+  _dispose(obj) {
+    if (!obj.traverse) return;
+    obj.traverse(o => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); }
+    });
+  }
+
+  _glowTex(inner, outer) {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0, inner);
+    grad.addColorStop(0.35, outer);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+    return new this._THREE.CanvasTexture(c);
+  }
+
+  _sprite(inner, outer, scale, opacity) {
+    const THREE = this._THREE;
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: this._glowTex(inner, outer), transparent: true, opacity, blending: THREE.AdditiveBlending, depthWrite: false }));
+    s.scale.set(scale, scale, 1);
+    return s;
+  }
+
+  _points(pos, col, size, opacity) {
+    const THREE = this._THREE;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    return new THREE.Points(geo, new THREE.PointsMaterial({ size, vertexColors: true, transparent: true, opacity, blending: THREE.AdditiveBlending, depthWrite: false }));
+  }
+
+  _hexShape(th) {
+    const P3 = Math.PI / 3;
+    const m = ((th % P3) + P3) % P3;
+    return Math.cos(Math.PI / 6) / Math.cos(m - Math.PI / 6);
+  }
+
+  _buildStorm(z, d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    group.position.set(0, 0, z);
+    group.rotation.x = -0.5;
+    const cIn = new THREE.Color(0xf2f6ff), cMid = new THREE.Color(0x4a9de8), cOut = new THREE.Color(0x8a5cf5);
+    const bands = [
+      { r0: 0.5, r1: 6, hex: 0, n: 2400, sp: 0.20 },
+      { r0: 6, r1: 11.5, hex: 0.35, n: 3000, sp: 0.08 },
+      { r0: 11.5, r1: 15.6, hex: 1, n: 3200, sp: 0.05 }
+    ];
+    for (const b of bands) {
+      const n = Math.floor(b.n * d), pos = [], col = [];
+      for (let i = 0; i < n; i++) {
+        const th = Math.random() * Math.PI * 2;
+        const rr = b.r0 + Math.random() * (b.r1 - b.r0);
+        const r = rr * (1 + b.hex * (this._hexShape(th) - 1));
+        pos.push(Math.cos(th) * r, Math.sin(th) * r, this._g() * 0.7);
+        const t = rr / 15.6;
+        const c = t < 0.4 ? cIn.clone().lerp(cMid, t / 0.4) : cMid.clone().lerp(cOut, (t - 0.4) / 0.6);
+        const f = 0.55 + Math.random() * 0.45;
+        col.push(c.r * f, c.g * f, c.b * f);
+      }
+      const p = this._points(pos, col, 0.42, 0.9);
+      group.add(p);
+      this._anims.push((t, dt) => { p.rotation.z += dt * b.sp * this._speed(); });
+    }
+    const rads = [16.4, 17.6];
+    for (let j = 0; j < 2; j++) {
+      const pts = [];
+      for (let k = 0; k <= 6; k++) { const a = k * Math.PI / 3; pts.push(new THREE.Vector3(Math.cos(a) * rads[j], Math.sin(a) * rads[j], 0)); }
+      const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: j === 0 ? 0x6ab0f0 : 0x8a5cf5, transparent: true, opacity: j === 0 ? 0.45 : 0.16 }));
+      group.add(line);
+      this._anims.push((t, dt) => { line.rotation.z += dt * 0.05 * this._speed(); });
+    }
+    const glow = this._sprite('rgba(235,242,255,0.9)', 'rgba(88,140,235,0.25)', 13, 0.75);
+    group.add(glow);
+    this._anims.push((t) => { const s = 13 + Math.sin(t * 0.8) * 0.8; glow.scale.set(s, s, 1); });
+    return group;
+  }
+
+  _buildRing(z, d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    group.position.set(0, 0, z);
+    const lens = this._sprite('rgba(240,244,255,0.95)', 'rgba(150,170,240,0.2)', 6.5, 0.85);
+    group.add(lens);
+    this._anims.push((t) => { const s = 6.5 + Math.sin(t * 1.3) * 0.35; lens.scale.set(s, s, 1); });
+    const n = Math.floor(2600 * d), pos = [], col = [];
+    const cA = new THREE.Color(0x7db8f5), cB = new THREE.Color(0x9d8af5);
+    for (let i = 0; i < n; i++) {
+      const th = Math.random() * Math.PI * 2;
+      const r = 13.5 + this._g() * 0.55;
+      pos.push(Math.cos(th) * r, Math.sin(th) * r, this._g() * 0.4);
+      const f = 0.3 + 0.7 * Math.pow(Math.abs(Math.sin(th)), 3);
+      const c = cA.clone().lerp(cB, Math.random());
+      col.push(c.r * f, c.g * f, c.b * f);
+    }
+    const ring = this._points(pos, col, 0.5, 0.95);
+    group.add(ring);
+    this._anims.push((t, dt) => { ring.rotation.z += dt * 0.11 * this._speed(); });
+    const torus = new THREE.Mesh(new THREE.TorusGeometry(13.5, 0.06, 8, 220), new THREE.MeshBasicMaterial({ color: 0x88b4f0, transparent: true, opacity: 0.32, blending: THREE.AdditiveBlending, depthWrite: false }));
+    group.add(torus);
+    const offs = [0.6, Math.PI + 0.6];
+    for (const off of offs) {
+      const arc = new THREE.Mesh(new THREE.TorusGeometry(13.5, 0.16, 8, 80, 1.1), new THREE.MeshBasicMaterial({ color: 0xbfd8ff, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
+      arc.rotation.z = off;
+      group.add(arc);
+      this._anims.push((t, dt) => { arc.rotation.z += dt * 0.08 * this._speed(); });
+    }
+    for (let i = 0; i < 10; i++) {
+      const s = this._sprite('rgba(220,230,255,0.8)', 'rgba(120,140,220,0.15)', 2 + Math.random() * 3, 0.45);
+      s.position.set((Math.random() - 0.5) * 76, (Math.random() - 0.5) * 42, -22 - Math.random() * 40);
+      group.add(s);
+    }
+    return group;
+  }
+
+  _buildNebula(z, d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    group.position.set(0, 0, z);
+    group.rotation.z = 0.08;
+    const H = 11;
+    const cA = new THREE.Color(0x8a5cf5), cB = new THREE.Color(0x4a9de8);
+    const n = Math.floor(5200 * d), pos = [], col = [];
+    for (let i = 0; i < n; i++) {
+      let x, y, frame = false;
+      if (Math.random() < 0.72) {
+        frame = true;
+        const e = Math.floor(Math.random() * 4);
+        const t = (Math.random() * 2 - 1) * H;
+        if (e === 0) { x = t; y = H; } else if (e === 1) { x = t; y = -H; } else if (e === 2) { x = H; y = t; } else { x = -H; y = t; }
+        x += this._g() * 1.3; y += this._g() * 1.3;
+      } else {
+        x = (Math.random() * 2 - 1) * H * 0.95;
+        y = (Math.random() * 2 - 1) * H * 0.95;
+      }
+      pos.push(x, y, this._g() * (frame ? 2.2 : 2.8));
+      const c = cA.clone().lerp(cB, Math.random());
+      const f = (frame ? 0.5 : 0.28) + Math.random() * 0.4;
+      col.push(c.r * f, c.g * f, c.b * f);
+    }
+    const cloud = this._points(pos, col, 0.4, 0.85);
+    group.add(cloud);
+    const sqs = [H, H * 1.18];
+    for (let j = 0; j < 2; j++) {
+      const s = sqs[j];
+      const pts = [new THREE.Vector3(-s, -s, 0), new THREE.Vector3(s, -s, 0), new THREE.Vector3(s, s, 0), new THREE.Vector3(-s, s, 0)];
+      const loop = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: 0xb48af8, transparent: true, opacity: j === 0 ? 0.5 : 0.18 }));
+      group.add(loop);
+    }
+    const dg = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-H * 1.18, -H * 1.18, 0), new THREE.Vector3(H * 1.18, H * 1.18, 0),
+      new THREE.Vector3(-H * 1.18, H * 1.18, 0), new THREE.Vector3(H * 1.18, -H * 1.18, 0)
+    ]);
+    group.add(new THREE.LineSegments(dg, new THREE.LineBasicMaterial({ color: 0x8a5cf5, transparent: true, opacity: 0.12 })));
+    const star = this._sprite('rgba(245,240,255,1)', 'rgba(170,130,245,0.3)', 5, 0.9);
+    group.add(star);
+    this._anims.push((t) => { const s = 5 + Math.sin(t * 2.1) * 0.4; star.scale.set(s, s, 1); });
+    const halo = this._sprite('rgba(140,100,235,0.5)', 'rgba(90,70,190,0.12)', 30, 0.16);
+    group.add(halo);
+    this._anims.push((t) => { group.rotation.z = 0.08 + Math.sin(t * 0.15) * 0.02; });
+    return group;
+  }
+
+  _buildSpiral(z, d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    group.position.set(0, 0, z);
+    group.rotation.x = -0.45;
+    const PHI = (1 + Math.sqrt(5)) / 2;
+    const a = 0.32, b = Math.log(PHI) / (Math.PI / 2), thMax = 4.1 * Math.PI;
+    const cCore = new THREE.Color(0xfff2d8), cGold = new THREE.Color(0xe0b866), cBlue = new THREE.Color(0x4a9de8);
+    const arms = [0, Math.PI];
+    for (const arm of arms) {
+      const n = Math.floor(3800 * d), pos = [], col = [];
+      for (let i = 0; i < n; i++) {
+        const th = Math.pow(Math.random(), 0.7) * thMax;
+        const r = a * Math.exp(b * th);
+        const spread = 0.25 + r * 0.10;
+        pos.push(Math.cos(th + arm) * r + this._g() * spread, Math.sin(th + arm) * r + this._g() * spread, this._g() * (0.3 + r * 0.02));
+        const t = Math.min(1, r / 16.5);
+        const c = t < 0.35 ? cCore.clone().lerp(cGold, t / 0.35) : cGold.clone().lerp(cBlue, (t - 0.35) / 0.65);
+        const f = 0.4 + Math.random() * 0.6;
+        col.push(c.r * f, c.g * f, c.b * f);
+      }
+      group.add(this._points(pos, col, 0.4, 0.9));
+    }
+    const bn = Math.floor(1400 * d), bpos = [], bcol = [];
+    for (let i = 0; i < bn; i++) {
+      bpos.push(this._g() * 1.9, this._g() * 1.9, this._g() * 1.1);
+      const f = 0.5 + Math.random() * 0.5;
+      bcol.push(cCore.r * f, cCore.g * f, cCore.b * f);
+    }
+    group.add(this._points(bpos, bcol, 0.42, 0.95));
+    const spts = [];
+    for (let th = 0; th <= thMax; th += 0.05) {
+      const r = a * Math.exp(b * th);
+      spts.push(new THREE.Vector3(Math.cos(th) * r, Math.sin(th) * r, 0.2));
+    }
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(spts), new THREE.LineBasicMaterial({ color: 0xe0b866, transparent: true, opacity: 0.45 })));
+    const glow = this._sprite('rgba(255,240,215,0.95)', 'rgba(224,184,102,0.25)', 9, 0.8);
+    group.add(glow);
+    this._anims.push((t, dt) => { group.rotation.z -= dt * 0.04 * this._speed(); });
+    return group;
+  }
+
+  _buildWeb(z, d) {
+    const THREE = this._THREE;
+    const group = new THREE.Group();
+    group.position.set(0, 0, z);
+    group.rotation.x = 0.15;
+    const centers = [];
+    for (let i = 0; i < 11; i++) centers.push([(Math.random() - 0.5) * 46, (Math.random() - 0.5) * 32, (Math.random() - 0.5) * 40]);
+    const nodes = [];
+    const nn = Math.floor(300 * d);
+    for (let i = 0; i < nn; i++) {
+      const c = centers[Math.floor(Math.random() * centers.length)];
+      nodes.push([c[0] + this._g() * 7, c[1] + this._g() * 7, c[2] + this._g() * 7]);
+    }
+    for (let i = 0; i < 40; i++) nodes.push([(Math.random() - 0.5) * 60, (Math.random() - 0.5) * 42, (Math.random() - 0.5) * 50]);
+    const pos = [], col = [];
+    const cA = new THREE.Color(0x4a9de8), cB = new THREE.Color(0x9d8af5), cW = new THREE.Color(0xeef2fa);
+    for (const nd of nodes) {
+      pos.push(nd[0], nd[1], nd[2]);
+      const c = Math.random() < 0.08 ? cW : (Math.random() < 0.5 ? cA : cB);
+      const f = 0.4 + Math.random() * 0.6;
+      col.push(c.r * f, c.g * f, c.b * f);
+    }
+    group.add(this._points(pos, col, 0.5, 0.95));
+    const deg = new Array(nodes.length).fill(0);
+    const epos = [];
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        if (deg[i] >= 5 || deg[j] >= 5) continue;
+        const dx = nodes[i][0] - nodes[j][0], dy = nodes[i][1] - nodes[j][1], dz = nodes[i][2] - nodes[j][2];
+        if (dx * dx + dy * dy + dz * dz < 72) {
+          epos.push(nodes[i][0], nodes[i][1], nodes[i][2], nodes[j][0], nodes[j][1], nodes[j][2]);
+          deg[i]++; deg[j]++;
+        }
+      }
+    }
+    const eg = new THREE.BufferGeometry();
+    eg.setAttribute('position', new THREE.Float32BufferAttribute(epos, 3));
+    group.add(new THREE.LineSegments(eg, new THREE.LineBasicMaterial({ color: 0x4a7ad6, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending, depthWrite: false })));
+    for (let i = 0; i < 4; i++) {
+      const c = centers[i];
+      const s = this._sprite('rgba(180,160,250,0.6)', 'rgba(100,90,200,0.12)', 7, 0.25);
+      s.position.set(c[0], c[1], c[2]);
+      group.add(s);
+    }
+    this._anims.push((t, dt) => { group.rotation.y += dt * 0.055 * this._speed(); group.rotation.x = 0.15 + Math.sin(t * 0.2) * 0.05; });
+    return group;
+  }
+
+  _buildStars(d) {
+    const n = Math.floor(2600 * d), pos = [], col = [];
+    for (let i = 0; i < n; i++) {
+      pos.push((Math.random() - 0.5) * 260, (Math.random() - 0.5) * 200, 60 - Math.random() * 820);
+      const f = 0.25 + Math.random() * 0.55;
+      const blue = Math.random() * 0.15;
+      col.push(f, f, Math.min(1, f + blue));
+    }
+    const p = this._points(pos, col, 0.35, 0.7);
+    this._anims.push((t) => { p.material.opacity = 0.55 + Math.sin(t * 1.6) * 0.15 + Math.sin(t * 4.3) * 0.07; });
+    return p;
+  }
+
+  _tick = () => {
+    if (!this._alive) return;
+    this._raf = requestAnimationFrame(this._tick);
+    const now = performance.now();
+    let dt = (now - this._last) / 1000; this._last = now;
+    if (dt > 0.1) dt = 0.1;
+    const t = now / 1000;
+    this._seg += (this._segT - this._seg) * 0.07;
+    this._p += (this._pT - this._p) * 0.07;
+    this._mx += (this._mxT - this._mx) * 0.05;
+    this._my += (this._myT - this._my) * 0.05;
+    const seg = Math.min(3.999, Math.max(0, this._seg));
+    const i = Math.floor(seg), f = seg - i, s = f * f * (3 - 2 * f);
+    const w0 = this._way[i], w1 = this._way[i + 1], l0 = this._look[i], l1 = this._look[i + 1];
+    const par = (this.props.parallax ?? 1) * 3.2;
+    const swx = Math.sin(t * 0.3) * 0.7, swy = Math.cos(t * 0.22) * 0.5;
+    this._camera.position.set(
+      w0.x + (w1.x - w0.x) * s + this._mx * par + swx,
+      w0.y + (w1.y - w0.y) * s - this._my * par * 0.6 + swy,
+      w0.z + (w1.z - w0.z) * s
+    );
+    this._camera.lookAt(
+      l0.x + (l1.x - l0.x) * s + this._mx * par * 0.3,
+      l0.y + (l1.y - l0.y) * s - this._my * par * 0.2,
+      l0.z + (l1.z - l0.z) * s
+    );
+    this._camera.rotation.z += Math.sin(t * 0.13) * 0.015;
+    const vel = Math.abs(this._segT - this._seg);
+    const fov = 58 + Math.min(9, vel * 26);
+    if (Math.abs(fov - this._camera.fov) > 0.05) { this._camera.fov = fov; this._camera.updateProjectionMatrix(); }
+    for (const fn of this._anims) fn(t, dt);
+    this._renderer.render(this._scene, this._camera);
+    const act = Math.max(0, Math.min(4, Math.round(this._seg)));
+    if (act !== this._active) {
+      this._active = act;
+      if (this.secLabelRef.current) this.secLabelRef.current.textContent = this._labels[act];
+      if (this.coordRef.current) this.coordRef.current.textContent = this._coords[act];
+    }
+    if (this.progRef.current) this.progRef.current.style.width = (this._p * 100).toFixed(1) + '%';
+  };
+
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      canvasRef: this.canvasRef,
+      secLabelRef: this.secLabelRef,
+      coordRef: this.coordRef,
+      progRef: this.progRef,
+      loaderRef: this.loaderRef
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Claude Code — personal/local settings (not shared)
+.claude/settings.local.json
+
+# Dependencies / build output (for when the app is scaffolded)
+node_modules/
+dist/
+build/
+.DS_Store
