@@ -295,8 +295,9 @@ export const PALETTE = {
       frameEdgeBias: 0.72,
       /* design/Cosmic_Portfolio.dc.html:571 */
 
-      squareOutlines: [11, 13.0 /* H * 1.18 */],
-      /* design/README.md:159, design/Cosmic_Portfolio.dc.html:588 */
+      outlineScale: 1.18,
+      /* outlines sit at halfSize and halfSize * 1.18 —
+         design/README.md:159 ("H and H×1.18"), design/Cosmic_Portfolio.dc.html:588 */
 
       pointSize: 0.4,
       /* design/Cosmic_Portfolio.dc.html:586 */

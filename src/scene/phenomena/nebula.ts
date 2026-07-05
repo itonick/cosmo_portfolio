@@ -57,9 +57,8 @@ export function buildNebula(ctx: PhenomenonContext): PhenomenonResult {
   const cloud = points(pos, col, P.pointSize, P.pointOpacity);
   group.add(cloud);
 
-  // Square outlines at H and H*1.18 — computed exactly (not the rounded palette constant).
-  // design/Cosmic_Portfolio.dc.html:588
-  const sqs = [H, H * 1.18];
+  // Square outlines at H and H*1.18. design/Cosmic_Portfolio.dc.html:588
+  const sqs = [H, H * P.outlineScale];
   for (let j = 0; j < sqs.length; j++) {
     const s = sqs[j];
     const pts = [

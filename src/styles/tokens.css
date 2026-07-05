@@ -237,10 +237,8 @@
   --animation-gradFlow: gradFlow 9s linear infinite;
   /* design/README.md:90 */
 
-  /* Blink cue (SCROLL TO DESCEND, loader text) */
-  --animation-blinkCue-duration: (varies per element);
-  /* design/README.md:91 */
-
+  /* Blink cue (SCROLL TO DESCEND, loader text) — duration is set per use
+     site (e.g. hero cue 1.6s, design/Cosmic_Portfolio.dc.html:30) */
   --animation-blinkCue-opacity-min: 0.2;
   /* design/README.md:91 */
 

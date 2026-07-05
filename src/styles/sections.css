@@ -56,6 +56,13 @@ h2 {
   transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  /* Reveal becomes an opacity-only fade — no slide. design/README.md:194 */
+  .reveal-item {
+    transform: none;
+  }
+}
+
 /* ===== Card (shared surface) ===== design/README.md:56-59,87-88 ===== */
 .card {
   background: var(--color-card-surface);
