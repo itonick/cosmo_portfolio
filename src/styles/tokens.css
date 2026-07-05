@@ -1,0 +1,297 @@
+/* Design Tokens — Cosmic Portfolio
+   Source: design/README.md (primary specification)
+   Source: design/Cosmic_Portfolio.dc.html (implementation values) */
+
+:root {
+  /* Colors — design/README.md:55–69 */
+
+  /* Backgrounds & surfaces */
+  --color-void: #04060f;
+  /* design/README.md:55 */
+
+  --color-card-surface: rgba(5, 8, 18, 0.62);
+  /* design/README.md:56 */
+
+  /* Borders */
+  --color-card-border: rgba(140, 165, 225, 0.16);
+  /* design/README.md:57 */
+
+  --color-card-border-blue-hover: rgba(140, 185, 245, 0.55);
+  /* design/README.md:58 */
+
+  --color-card-border-gold-hover: rgba(224, 184, 102, 0.5);
+  /* design/README.md:59 */
+
+  /* Text */
+  --color-text-primary: #e9edf7;
+  /* design/README.md:60 (first of three variants) */
+
+  --color-text-primary-alt-1: #eef2fa;
+  /* design/README.md:60 (second variant) */
+
+  --color-text-primary-alt-2: #f0f4fc;
+  /* design/README.md:60 (third variant) */
+
+  --color-text-muted: rgba(210, 222, 245, 0.6);
+  /* design/README.md:61 (lower bound) */
+
+  --color-text-muted-alt: rgba(212, 222, 244, 0.75);
+  /* design/README.md:61 (upper bound) */
+
+  /* Accents */
+  --color-accent-blue-1: #6ab0f0;
+  /* design/README.md:62 (first variant) */
+
+  --color-accent-blue-2: #4a9de8;
+  /* design/README.md:62 (second variant) */
+
+  --color-accent-blue-3: #7db8f5;
+  /* design/README.md:62 (third variant) */
+
+  --color-accent-violet-1: #9d8af5;
+  /* design/README.md:63 (first variant) */
+
+  --color-accent-violet-2: #8a5cf5;
+  /* design/README.md:63 (second variant) */
+
+  --color-accent-violet-3: #b48af8;
+  /* design/README.md:63 (third variant) */
+
+  --color-accent-gold: #e0b866;
+  /* design/README.md:64 */
+
+  /* Chips */
+  --color-chip-blue-bg: rgba(74, 157, 232, 0.07);
+  /* design/README.md:65 */
+
+  --color-chip-blue-border: rgba(140, 165, 225, 0.25);
+  /* design/README.md:65 */
+
+  --color-chip-violet-bg: rgba(138, 92, 245, 0.08);
+  /* design/README.md:66 */
+
+  --color-chip-violet-border: rgba(157, 138, 245, 0.28);
+  /* design/README.md:66 */
+
+  /* Interactive */
+  --color-selection: rgba(122, 150, 245, 0.35);
+  /* design/README.md:67 */
+
+  --gradient-progress-bar: linear-gradient(90deg, #4a9de8, #9d8af5);
+  /* design/README.md:68 */
+
+  --gradient-hero-name: linear-gradient(100deg, #f0f4fc 20%, #7db8f5 45%, #c9b3ff 60%, #f0f4fc 85%);
+  /* design/README.md:69 */
+
+  /* Typography — design/README.md:71–77 */
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', sans-serif;
+  /* design/README.md:72 */
+
+  --font-mono: 'IBM Plex Mono', monospace;
+  /* design/README.md:75 */
+
+  --font-body: 'Noto Sans JP', sans-serif;
+  /* design/README.md:76 */
+
+  --font-serif: 'Shippori Mincho', serif;
+  /* design/README.md:77 */
+
+  /* Display / H1 */
+  --font-h1-size: clamp(54px, 8.5vw, 112px);
+  /* design/README.md:73 */
+
+  --font-h1-weight: 700;
+  /* design/README.md:72 */
+
+  --font-h1-line-height: 0.98;
+  /* design/README.md:73 */
+
+  --font-h1-letter-spacing: 0.03em;
+  /* design/README.md:73 */
+
+  /* Display / H2 */
+  --font-h2-size: clamp(38px, 5vw, 64px);
+  /* design/README.md:74 */
+
+  --font-h2-weight: 700;
+  /* design/README.md:72 */
+
+  --font-h2-line-height: 1.02;
+  /* design/README.md:74 */
+
+  --font-h2-letter-spacing: 0.02em;
+  /* design/README.md:74 */
+
+  /* HUD / mono labels */
+  --font-hud-size-min: 10px;
+  /* design/README.md:75 (range 10–14px) */
+
+  --font-hud-size-max: 14px;
+  /* design/README.md:75 */
+
+  --font-hud-letter-spacing-min: 0.14em;
+  /* design/README.md:75 */
+
+  --font-hud-letter-spacing-max: 0.34em;
+  /* design/README.md:75 */
+
+  /* Body (Japanese) */
+  --font-body-size-min: 13px;
+  /* design/README.md:76 (range 13–14px) */
+
+  --font-body-size-max: 14px;
+  /* design/README.md:76 */
+
+  --font-body-line-height-min: 1.95;
+  /* design/README.md:76 */
+
+  --font-body-line-height-max: 2.1;
+  /* design/README.md:76 */
+
+  /* Serif heading (poetic tone) */
+  --font-serif-weight: 600;
+  /* design/README.md:77 */
+
+  --font-serif-letter-spacing: 0.08em;
+  /* design/README.md:77 */
+
+  /* Spacing / structure — design/README.md:79–84 */
+
+  /* Section padding */
+  --spacing-section-top: 120px;
+  /* design/README.md:80 */
+
+  --spacing-section-horizontal: 24px;
+  /* design/README.md:80 */
+
+  --spacing-section-bottom-hero: 140px;
+  /* design/README.md:80 */
+
+  --spacing-section-bottom-contact: 80px;
+  /* design/README.md:80 */
+
+  /* Content max-widths */
+  --max-width-about-card: 540px;
+  /* design/README.md:81 */
+
+  --max-width-skills-grid: 1000px;
+  /* design/README.md:81 */
+
+  --max-width-projects-wrapper: 1160px;
+  /* design/README.md:81 */
+
+  --max-width-projects-card: 560px;
+  /* design/README.md:81 */
+
+  /* Card padding */
+  --padding-card-about: 42px 44px;
+  /* design/README.md:82 */
+
+  --padding-card-skills: 24px 26px;
+  /* design/README.md:82 */
+
+  --padding-card-projects: 28px 32px;
+  /* design/README.md:82 */
+
+  /* Skills grid */
+  --skills-grid-minmax: 290px;
+  /* design/README.md:83 */
+
+  --skills-grid-gap: 14px;
+  /* design/README.md:83 */
+
+  /* Motion timings — design/README.md:86–92 */
+
+  /* Card hover */
+  --transition-card-duration: 0.5s;
+  /* design/README.md:87 */
+
+  --ease-card-hover: cubic-bezier(0.22, 1, 0.36, 1);
+  /* design/README.md:87 */
+
+  --shadow-card-blue: 0 14px 44px rgba(46, 90, 200, 0.28);
+  /* design/README.md:88 */
+
+  --shadow-card-gold: 0 14px 44px rgba(120, 90, 30, 0.22);
+  /* design/README.md:88 */
+
+  /* Scroll reveal */
+  --transition-reveal-duration: 0.9s;
+  /* design/README.md:89 */
+
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+  /* design/README.md:89 */
+
+  --reveal-stagger: 0.13s;
+  /* design/README.md:89 */
+
+  --reveal-threshold: 0.12;
+  /* design/README.md:89 */
+
+  /* Hero name animations */
+  --animation-floatY: floatY 7s ease-in-out infinite;
+  /* design/README.md:90 */
+
+  --animation-gradFlow: gradFlow 9s linear infinite;
+  /* design/README.md:90 */
+
+  /* Blink cue (SCROLL TO DESCEND, loader text) */
+  --animation-blinkCue-duration: (varies per element);
+  /* design/README.md:91 */
+
+  --animation-blinkCue-opacity-min: 0.2;
+  /* design/README.md:91 */
+
+  --animation-blinkCue-opacity-max: 0.85;
+  /* design/README.md:91 */
+
+  /* Loader bar */
+  --animation-loadBar-duration: 1.4s;
+  /* design/README.md:92 */
+
+  --ease-loadBar: cubic-bezier(0.22, 1, 0.36, 1);
+  /* design/README.md:92 */
+}
+
+/* Keyframe animations — design/Cosmic_Portfolio.dc.html:19–22 */
+
+@keyframes blinkCue {
+  0%, 100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes gradFlow {
+  0% {
+    background-position: 0% 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@keyframes loadBar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
