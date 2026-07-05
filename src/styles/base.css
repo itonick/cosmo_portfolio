@@ -1,0 +1,54 @@
+/* Base — reset, background, selection, vignette
+   Source: design/README.md:35-46 (Global Layout & Stacking)
+   Source: design/Cosmic_Portfolio.dc.html:16-18,25,27,33 */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-void);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-selection);
+}
+
+/* z:0 — fixed Three.js canvas holder. design/README.md:39 */
+#canvas-holder {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#canvas-holder canvas {
+  display: block;
+}
+
+/* z:1 — vignette overlay. design/README.md:40, design/Cosmic_Portfolio.dc.html:33 */
+#vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(4, 6, 15, 0) 52%, rgba(4, 6, 15, 0.6) 100%);
+}

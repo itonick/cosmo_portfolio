@@ -1,0 +1,156 @@
+/* HUD chrome — nav / telemetry / progress / loader / tone variants
+   Source: design/README.md:131-135,179-194 (HUD Chrome, State/Props, Accessibility)
+   Source: design/Cosmic_Portfolio.dc.html:29-52 */
+
+/* ===== Top nav ===== design/Cosmic_Portfolio.dc.html:35-44 ===== */
+#hud-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  pointer-events: none;
+  background: linear-gradient(rgba(4, 6, 15, 0.75), rgba(4, 6, 15, 0));
+}
+
+.hud-brand {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(220, 230, 248, 0.85);
+}
+
+.hud-nav-links {
+  display: flex;
+  gap: 22px;
+  pointer-events: auto;
+}
+
+.hud-nav-links a {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: rgba(200, 214, 240, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hud-nav-links a:hover {
+  color: #ffffff;
+}
+
+/* ===== Bottom-left telemetry ===== design/Cosmic_Portfolio.dc.html:46-49 ===== */
+#hud-telemetry {
+  position: fixed;
+  left: 28px;
+  bottom: 24px;
+  z-index: 6;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  line-height: 1.9;
+}
+
+#hud-telemetry .hud-label {
+  color: rgba(200, 214, 240, 0.7);
+}
+
+#hud-telemetry .hud-coord {
+  color: rgba(160, 180, 220, 0.42);
+}
+
+/* ===== Bottom-right progress bar (150x2px) ===== design/Cosmic_Portfolio.dc.html:50-52 ===== */
+#hud-progress {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 6;
+  pointer-events: none;
+  width: 150px;
+  height: 2px;
+  background: rgba(150, 170, 220, 0.14);
+}
+
+#progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--gradient-progress-bar);
+}
+
+/* ===== Loader ===== design/Cosmic_Portfolio.dc.html:29-32 ===== */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background: var(--color-void);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease;
+}
+
+.loader-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  color: rgba(200, 214, 240, 0.75);
+  animation: blinkCue 1.6s infinite;
+}
+
+.loader-bar-track {
+  width: 180px;
+  height: 2px;
+  background: rgba(150, 170, 220, 0.15);
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-progress-bar);
+  transform-origin: left;
+  animation: var(--animation-loadBar-duration) var(--ease-loadBar) forwards loadBar;
+}
+
+/* ===== Tone variants ===== design/README.md:179-183, design/Cosmic_Portfolio.dc.html:322-326 ===== */
+html[data-tone='poetic'] [data-h] {
+  font-family: var(--font-serif);
+  font-weight: var(--font-serif-weight);
+  letter-spacing: var(--font-serif-letter-spacing);
+}
+
+html[data-tone='poetic'] [data-mono] {
+  color: rgba(196, 186, 240, 0.8);
+}
+
+html[data-tone='minimal'] [data-h] {
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+html[data-tone='minimal'] [data-hud] {
+  display: none;
+}
+
+html[data-tone='minimal'] [data-mono] {
+  opacity: 0.55;
+}
+
+/* ===== Reduced motion ===== design/README.md:174-175,191-194 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-name {
+    animation: none;
+  }
+
+  .scroll-cue,
+  .loader-text {
+    animation: none;
+  }
+}

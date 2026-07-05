@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja" data-tone="observatory">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAKUMI HOSHINO — Cosmic Mystery 3D Portfolio</title>
+
+    <!-- Google Fonts. design/README.md:30, design/Cosmic_Portfolio.dc.html:11-13 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/sections.css" />
+    <link rel="stylesheet" href="/src/styles/hud.css" />
+  </head>
+  <body>
+    <!-- z:0 — Three.js canvas mounts here; purely decorative. -->
+    <div id="canvas-holder" aria-hidden="true"></div>
+    <!-- z:1 — vignette overlay -->
+    <div id="vignette" aria-hidden="true"></div>
+
+    <!-- z:6 — HUD chrome -->
+    <header id="hud-nav">
+      <span class="hud-brand" data-mono>T.HOSHINO — BACKEND ENGINEER</span>
+      <nav class="hud-nav-links">
+        <a href="#sec1">01 STORM</a>
+        <a href="#sec2">02 RING</a>
+        <a href="#sec3">03 NEBULA</a>
+        <a href="#sec4">04 SPIRAL</a>
+        <a href="#sec5">05 WEB</a>
+      </nav>
+    </header>
+
+    <div id="hud-telemetry" data-hud aria-hidden="true">
+      <div id="hud-sec-label" class="hud-label">OBS.01 — HEXAGONAL STORM</div>
+      <div id="hud-coord" class="hud-coord">SATURN — 78.1°N / Ø 29,000 KM</div>
+    </div>
+    <div id="hud-progress" data-hud aria-hidden="true">
+      <div id="progress-fill"></div>
+    </div>
+
+    <!-- z:2 — content sections -->
+    <main>
+      <section id="sec1" class="section section-hero">
+        <div class="mono eyebrow" data-mono>OBS.01 — HEXAGONAL STORM / SATURN NORTH POLE</div>
+        <h1 class="hero-name" data-h>TAKUMI<br />HOSHINO</h1>
+        <div class="hero-subtitle">星野 拓海 — バックエンドエンジニア</div>
+        <p class="hero-copy">
+          大規模分散システムの設計と運用が専門。土星の北極で60年以上崩れない六角形の嵐のように、秩序を保ち続けるシステムをつくります。
+        </p>
+        <div class="scroll-cue" data-hud>SCROLL TO DESCEND ▼</div>
+      </section>
+
+      <section id="sec2" class="section section-about">
+        <div class="about-wrapper">
+          <div class="card card--blue card-about">
+            <div class="mono eyebrow" data-mono>OBS.02 — EINSTEIN RING / GRAVITATIONAL LENSING</div>
+            <h2 data-h>ABOUT</h2>
+            <div class="subtitle">経歴 — 光は重力で曲がり、道は出会いで曲がる</div>
+            <p class="body-copy">
+              受託開発のJavaから、スタートアップのGo、そして決済基盤のテックリードへ。重い天体が光を曲げるように、出会ったチームと課題がキャリアの軌道を曲げてきました。
+            </p>
+            <div class="timeline-row">
+              <span class="timeline-year">2018</span>
+              <div>
+                <div class="timeline-title">SIerで基幹システム開発</div>
+                <div class="timeline-sub">Java / Oracle — 金融系バッチ処理の設計・運用</div>
+              </div>
+            </div>
+            <div class="timeline-row">
+              <span class="timeline-year">2020</span>
+              <div>
+                <div class="timeline-title">スタートアップの1人目バックエンド</div>
+                <div class="timeline-sub">Go / AWS — ゼロからのマイクロサービス基盤構築</div>
+              </div>
+            </div>
+            <div class="timeline-row">
+              <span class="timeline-year">2022</span>
+              <div>
+                <div class="timeline-title">決済基盤のテックリード</div>
+                <div class="timeline-sub">ピーク12,000 TPSの決済システムを設計・運用</div>
+              </div>
+            </div>
+            <div class="timeline-row">
+              <span class="timeline-year">2025</span>
+              <div>
+                <div class="timeline-title">独立 — 技術顧問 / 設計支援</div>
+                <div class="timeline-sub">大規模データ基盤・分散システムの設計コンサルティング</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec3" class="section section-skills">
+        <div class="skills-header">
+          <div class="mono eyebrow" data-mono>OBS.03 — SQUARE NEBULA / MWC 922</div>
+          <h2 data-h>SKILLS</h2>
+          <div class="subtitle">スキル — 星雲は、4つの象限に区切られる</div>
+        </div>
+        <div class="skills-grid">
+          <div class="card card--blue card-skill">
+            <div class="card-skill-head">
+              <span class="card-skill-label card-skill-label--blue" data-mono>LANGUAGES</span>
+              <span class="card-skill-label-ja">言語</span>
+            </div>
+            <div class="chip-row">
+              <span class="chip chip--blue">Go</span>
+              <span class="chip chip--blue">Python</span>
+              <span class="chip chip--blue">TypeScript</span>
+              <span class="chip chip--blue">Rust</span>
+              <span class="chip chip--blue">SQL</span>
+            </div>
+          </div>
+          <div class="card card--blue card-skill">
+            <div class="card-skill-head">
+              <span class="card-skill-label card-skill-label--blue" data-mono>FRAMEWORKS / API</span>
+              <span class="card-skill-label-ja">通信・実装</span>
+            </div>
+            <div class="chip-row">
+              <span class="chip chip--blue">gRPC</span>
+              <span class="chip chip--blue">Gin</span>
+              <span class="chip chip--blue">FastAPI</span>
+              <span class="chip chip--blue">NestJS</span>
+              <span class="chip chip--blue">GraphQL</span>
+            </div>
+          </div>
+          <div class="card card--blue card-skill">
+            <div class="card-skill-head">
+              <span class="card-skill-label card-skill-label--violet" data-mono>DATA</span>
+              <span class="card-skill-label-ja">データ基盤</span>
+            </div>
+            <div class="chip-row">
+              <span class="chip chip--violet">PostgreSQL</span>
+              <span class="chip chip--violet">Redis</span>
+              <span class="chip chip--violet">Kafka</span>
+              <span class="chip chip--violet">Elasticsearch</span>
+              <span class="chip chip--violet">BigQuery</span>
+            </div>
+          </div>
+          <div class="card card--blue card-skill">
+            <div class="card-skill-head">
+              <span class="card-skill-label card-skill-label--violet" data-mono>INFRA / OPS</span>
+              <span class="card-skill-label-ja">インフラ・運用</span>
+            </div>
+            <div class="chip-row">
+              <span class="chip chip--violet">AWS</span>
+              <span class="chip chip--violet">GCP</span>
+              <span class="chip chip--violet">Kubernetes</span>
+              <span class="chip chip--violet">Terraform</span>
+              <span class="chip chip--violet">Docker</span>
+              <span class="chip chip--violet">GitHub Actions</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec4" class="section section-projects">
+        <div class="projects-wrapper">
+          <div class="mono eyebrow" data-mono>OBS.04 — GOLDEN SPIRAL / LOGARITHMIC GALAXY</div>
+          <h2 data-h>PROJECTS</h2>
+          <div class="subtitle">実績 — 渦巻銀河の腕のように、中心から外へ</div>
+
+          <div class="card card--gold card-project">
+            <div class="card-project-head">
+              <span class="card-project-phi">φ¹</span>
+              <span class="card-project-stack" data-mono>GO / KAFKA / POSTGRESQL / K8S</span>
+            </div>
+            <div class="card-project-title">リアルタイム決済基盤</div>
+            <p class="card-project-desc">
+              イベント駆動アーキテクチャによる決済処理基盤。Kafkaによる非同期パイプラインと冪等性設計で、ピーク時も取りこぼしゼロを実現。
+            </p>
+            <div class="metrics-row">
+              <div><div class="metric-value">12,000</div><div class="metric-label">PEAK TPS</div></div>
+              <div><div class="metric-value">45ms</div><div class="metric-label">P99 LATENCY</div></div>
+              <div><div class="metric-value">99.99%</div><div class="metric-label">SLA</div></div>
+            </div>
+          </div>
+
+          <div class="card card--gold card-project">
+            <div class="card-project-head">
+              <span class="card-project-phi">φ²</span>
+              <span class="card-project-stack" data-mono>PYTHON / ELASTICSEARCH</span>
+            </div>
+            <div class="card-project-title">検索基盤リプレイス</div>
+            <p class="card-project-desc">
+              2.4億ドキュメントの全文検索基盤を再設計。インデックス戦略とクエリ最適化でレイテンシとコストを同時に削減。
+            </p>
+            <div class="metrics-row">
+              <div><div class="metric-value">240M</div><div class="metric-label">DOCUMENTS</div></div>
+              <div><div class="metric-value">80→18ms</div><div class="metric-label">P50 QUERY</div></div>
+              <div><div class="metric-value">-62%</div><div class="metric-label">INFRA COST</div></div>
+            </div>
+          </div>
+
+          <div class="card card--gold card-project">
+            <div class="card-project-head">
+              <span class="card-project-phi">φ³</span>
+              <span class="card-project-stack" data-mono>GO / GRPC / TERRAFORM</span>
+            </div>
+            <div class="card-project-title">マルチテナントSaaS API基盤</div>
+            <p class="card-project-desc">
+              340テナントが同居するAPI基盤の分離設計とIaC化。デプロイを15分から90秒へ短縮し、開発速度を底上げ。
+            </p>
+            <div class="metrics-row">
+              <div><div class="metric-value">340</div><div class="metric-label">TENANTS</div></div>
+              <div><div class="metric-value">99.98%</div><div class="metric-label">UPTIME</div></div>
+              <div><div class="metric-value">90s</div><div class="metric-label">DEPLOY</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec5" class="section section-contact">
+        <div class="mono eyebrow" data-mono>OBS.05 — COSMIC WEB / LARGE-SCALE STRUCTURE</div>
+        <h2 data-h>CONTACT</h2>
+        <div class="subtitle">連絡先 — すべての銀河は、見えない糸でつながっている</div>
+        <p class="body-copy">設計相談・技術顧問・登壇のご依頼など、お気軽にご連絡ください。</p>
+        <div class="contact-buttons">
+          <a class="btn" href="mailto:hello@hoshino.dev">EMAIL</a>
+          <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer">GITHUB</a>
+          <a class="btn" href="https://x.com/" target="_blank" rel="noreferrer">X / TWITTER</a>
+        </div>
+        <div class="mono contact-footer" data-mono>© 2026 TAKUMI HOSHINO — RENDERED WITH THREE.JS</div>
+      </section>
+    </main>
+
+    <!-- z:9 — loading overlay -->
+    <div id="loader" role="status" aria-live="polite">
+      <div class="loader-text">CALIBRATING OBSERVATORY</div>
+      <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

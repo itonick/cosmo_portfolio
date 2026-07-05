@@ -1,0 +1,459 @@
+/* Sections — Hero / About / Skills / Projects / Contact
+   Source: design/README.md:79-127 (Sections, Spacing/structure, Motion timings)
+   Source: design/Cosmic_Portfolio.dc.html:54-198 */
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.section {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--font-h1-size);
+  line-height: var(--font-h1-line-height);
+  letter-spacing: var(--font-h1-letter-spacing);
+}
+
+h2 {
+  margin: 14px 0 10px;
+  font-size: var(--font-h2-size);
+  line-height: var(--font-h2-line-height);
+  letter-spacing: var(--font-h2-letter-spacing);
+  color: var(--color-text-primary-alt-1);
+}
+
+/* Section-title text-shadow is dropped for the About h2 — it already sits over
+   an opaque card. design/Cosmic_Portfolio.dc.html:66 vs :92,143,189 */
+.section-skills h2,
+.section-projects h2,
+.section-contact h2 {
+  text-shadow: 0 2px 24px rgba(4, 6, 15, 0.95);
+}
+
+/* ===== Reveal (scroll-in) ===== design/README.md:89 ===== */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity var(--transition-reveal-duration) var(--ease-reveal),
+    transform var(--transition-reveal-duration) var(--ease-reveal);
+}
+
+.reveal-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Card (shared surface) ===== design/README.md:56-59,87-88 ===== */
+.card {
+  background: var(--color-card-surface);
+  border: 1px solid var(--color-card-border);
+  box-sizing: border-box;
+  transition:
+    transform var(--transition-card-duration) var(--ease-card-hover),
+    border-color var(--transition-card-duration) ease,
+    box-shadow var(--transition-card-duration) ease;
+}
+
+.card--blue:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-card-border-blue-hover);
+  box-shadow: var(--shadow-card-blue);
+}
+
+.card--gold:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-card-border-gold-hover);
+  box-shadow: var(--shadow-card-gold);
+}
+
+/* ===== 01 — Hero ===== design/Cosmic_Portfolio.dc.html:54-60 ===== */
+.section-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-section-top) var(--spacing-section-horizontal) var(--spacing-section-bottom-hero);
+}
+
+.section-hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: var(--color-accent-blue-1);
+  margin-bottom: 24px;
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.hero-name {
+  font-size: var(--font-h1-size);
+  color: var(--color-text-primary-alt-2);
+  background: var(--gradient-hero-name);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation:
+    var(--animation-floatY),
+    var(--animation-gradFlow);
+}
+
+.hero-subtitle {
+  margin-top: 28px;
+  font-size: 13px;
+  letter-spacing: 0.5em;
+  color: rgba(222, 231, 248, 0.85);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.hero-copy {
+  margin: 26px auto 0;
+  max-width: 480px;
+  font-size: 14px;
+  line-height: 2.1;
+  color: var(--color-text-muted-alt);
+  text-shadow: 0 1px 14px rgba(4, 6, 15, 0.9);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(190, 205, 235, 0.6);
+  animation: blinkCue 2.6s infinite;
+}
+
+/* ===== 02 — About ===== design/Cosmic_Portfolio.dc.html:62-87 ===== */
+.section-about {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-section-top) var(--spacing-section-horizontal);
+}
+
+.about-wrapper {
+  width: 100%;
+  max-width: var(--max-width-projects-wrapper);
+  margin: 0 auto;
+}
+
+.card-about {
+  max-width: var(--max-width-about-card);
+  padding: var(--padding-card-about);
+}
+
+.card-about .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--color-accent-blue-1);
+}
+
+.card-about .subtitle {
+  font-size: 12.5px;
+  letter-spacing: 0.28em;
+  color: var(--color-text-muted);
+  margin-bottom: 22px;
+}
+
+.card-about .body-copy {
+  margin: 0 0 26px;
+  font-size: 13.5px;
+  line-height: 2;
+  color: rgba(214, 224, 244, 0.78);
+}
+
+.timeline-row {
+  display: flex;
+  gap: 20px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(140, 165, 225, 0.14);
+}
+
+.timeline-year {
+  flex: none;
+  width: 56px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-accent-blue-1);
+}
+
+.timeline-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.timeline-sub {
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: rgba(200, 212, 238, 0.55);
+  margin-top: 4px;
+}
+
+/* ===== 03 — Skills ===== design/Cosmic_Portfolio.dc.html:89-138 ===== */
+.section-skills {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing-section-top) var(--spacing-section-horizontal);
+}
+
+.skills-header {
+  text-align: center;
+}
+
+.skills-header .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--color-accent-violet-1);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.skills-header .subtitle {
+  font-size: 12.5px;
+  letter-spacing: 0.28em;
+  color: var(--color-text-muted);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--skills-grid-minmax), 1fr));
+  gap: var(--skills-grid-gap);
+  width: 100%;
+  max-width: var(--max-width-skills-grid);
+  margin: 44px auto 0;
+  text-align: left;
+}
+
+.card-skill {
+  padding: var(--padding-card-skills);
+}
+
+.card-skill-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.card-skill-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+.card-skill-label--blue {
+  color: var(--color-accent-blue-1);
+}
+
+.card-skill-label--violet {
+  color: var(--color-accent-violet-1);
+}
+
+.card-skill-label-ja {
+  font-size: 11px;
+  color: rgba(200, 212, 238, 0.45);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 5px 11px;
+  border: 1px solid;
+}
+
+.chip--blue {
+  border-color: var(--color-chip-blue-border);
+  color: #cfe0fa;
+  background: var(--color-chip-blue-bg);
+}
+
+.chip--violet {
+  border-color: var(--color-chip-violet-border);
+  color: #d8cffa;
+  background: var(--color-chip-violet-bg);
+}
+
+/* ===== 04 — Projects ===== design/Cosmic_Portfolio.dc.html:140-185 ===== */
+.section-projects {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-section-top) var(--spacing-section-horizontal);
+}
+
+.projects-wrapper {
+  width: 100%;
+  max-width: var(--max-width-projects-wrapper);
+  margin: 0 auto;
+}
+
+.projects-wrapper .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--color-accent-gold);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.projects-wrapper .subtitle {
+  font-size: 12.5px;
+  letter-spacing: 0.28em;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
+}
+
+.card-project {
+  max-width: var(--max-width-projects-card);
+  padding: var(--padding-card-projects);
+}
+
+/* Staircase left margins echoing a spiral arm. design/README.md:118, design/Cosmic_Portfolio.dc.html:145,158,171 */
+.card-project + .card-project {
+  margin-top: 22px;
+}
+
+.card-project:nth-of-type(2) {
+  margin-left: 6vw;
+}
+
+.card-project:nth-of-type(3) {
+  margin-left: 12vw;
+}
+
+.card-project-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.card-project-phi {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--color-accent-gold);
+}
+
+.card-project-stack {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: rgba(170, 190, 225, 0.55);
+}
+
+.card-project-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-text-primary-alt-1);
+  margin: 12px 0 8px;
+}
+
+.card-project-desc {
+  margin: 0 0 20px;
+  font-size: 13px;
+  line-height: 1.95;
+  color: rgba(210, 220, 242, 0.7);
+}
+
+.metrics-row {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--color-text-primary-alt-2);
+}
+
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(170, 190, 225, 0.5);
+  margin-top: 3px;
+}
+
+/* ===== 05 — Contact ===== design/Cosmic_Portfolio.dc.html:187-198 ===== */
+.section-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-section-top) var(--spacing-section-horizontal) var(--spacing-section-bottom-contact);
+}
+
+.section-contact .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--color-accent-blue-1);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.section-contact .subtitle {
+  font-size: 12.5px;
+  letter-spacing: 0.28em;
+  color: var(--color-text-muted);
+}
+
+.section-contact .body-copy {
+  margin: 28px auto 36px;
+  max-width: 440px;
+  font-size: 13.5px;
+  line-height: 2.05;
+  color: rgba(212, 222, 244, 0.72);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  padding: 15px 28px;
+  border: 1px solid rgba(140, 165, 225, 0.32);
+  background: rgba(74, 157, 232, 0.08);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn:hover {
+  background: rgba(74, 157, 232, 0.22);
+  border-color: rgba(140, 185, 245, 0.6);
+}
+
+.contact-footer {
+  margin-top: 110px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(160, 180, 220, 0.4);
+}
